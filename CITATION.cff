@@ -1,0 +1,49 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the manuscript it accompanies."
+title: "TRACK: Telemetry-Based Racing Analysis and Coaching Kit"
+abstract: >-
+  Analysis code, notebooks and documentation for a telemetry-based study of
+  driving behavior in sim racing. The pipeline segments corners, computes a
+  four-dimensional behavioral fingerprint over 19 metrics, clusters recording
+  sessions, and normalizes human metrics against a reinforcement-learning
+  reference agent.
+type: software
+authors:
+  - family-names: "Cangirili"
+    given-names: "Efe"
+    orcid: "https://orcid.org/0009-0005-8159-9450"
+    affiliation: "International Computer Institute, Ege University"
+    email: "efecangirili@gmail.com"
+  - family-names: "Kurt"
+    given-names: "Murat"
+    orcid: "https://orcid.org/0000-0002-3236-5595"
+    affiliation: "International Computer Institute, Ege University"
+license: MIT
+repository-code: "https://github.com/EfeCangirili/TRACK-sim-racing-telemetry"
+keywords:
+  - sim racing
+  - driving telemetry
+  - behavioral fingerprint
+  - unsupervised clustering
+  - driver identification
+references:
+  - type: conference-paper
+    title: "A Simulation Benchmark for Autonomous Racing with Large-Scale Human Data"
+    year: 2024
+    collection-title: "Advances in Neural Information Processing Systems 37 (NeurIPS 2024), Datasets and Benchmarks Track"
+    notes: "ACGym. Dataset released under CC BY 4.0; reference implementation under MIT."
+    authors:
+      - family-names: "Remonda"
+        given-names: "Adrian"
+      - family-names: "Hansen"
+        given-names: "Nicklas"
+      - family-names: "Raji"
+        given-names: "Ayoub"
+      - family-names: "Musiu"
+        given-names: "Nicola"
+      - family-names: "Bertogna"
+        given-names: "Marko"
+      - family-names: "Veas"
+        given-names: "Eduardo E."
+      - family-names: "Wang"
+        given-names: "Xiaolong"

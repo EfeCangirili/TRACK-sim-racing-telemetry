@@ -1,0 +1,29 @@
+# Raw and intermediate telemetry are NOT tracked here.
+# See data/README.md for how to obtain them.
+data/raw/
+data/processed/
+data/reference_sac/
+data/tier0_baseline/
+*.pkl
+*.zip
+*.ld
+*.ldx
+
+# Large derived artifacts
+*.parquet.bak
+_arsiv/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# OS / editor
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
