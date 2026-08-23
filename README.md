@@ -18,7 +18,7 @@ data/derived/     the derived tables the manuscript reports
 figures/          the figures used in the manuscript
 requirements.txt  package versions
 CITATION.cff      citation metadata
-LICENSE           licence
+LICENSE           license
 ```
 
 `notebooks/` is the pipeline itself. The notebooks are numbered in the order they run, and each one opens with an identity card giving what it reads, what it writes, which section of the manuscript it feeds, which working file it was copied from, and the checksum of that file. Section 4 describes what each notebook does.
@@ -39,9 +39,9 @@ The raw telemetry is not in this repository. The full data tree is roughly 164 G
 
 ### ACGym
 
-The primary source is the dataset presented by Remonda and colleagues at the NeurIPS 2024 Datasets and Benchmarks Track. It is openly available on Hugging Face as `dasgringuen/assettoCorsaGym` under a CC BY 4.0 licence. The revision used in this work is `ad1df12c49cce10f159ba31967744750bb9edd8b`.
+The primary source is the dataset presented by Remonda and colleagues at the NeurIPS 2024 Datasets and Benchmarks Track. It is openly available on Hugging Face as `dasgringuen/assettoCorsaGym` under a CC BY 4.0 license. The revision used in this work is `ad1df12c49cce10f159ba31967744750bb9edd8b`.
 
-The dataset holds recordings from fifteen human drivers on four circuits in three cars. This work uses three of those circuits, Barcelona, Monza and the Red Bull Ring; Indianapolis is left out of scope.
+The dataset's human portion is documented as comprising 15 distinct drivers, recorded on three circuits, Barcelona, Monza and the Red Bull Ring, in three cars. The distribution also covers a fourth circuit, Indianapolis. Human sessions were recorded there, but none of them enter the processed feature set used in this work. The agent reference does include Indianapolis.
 
 ### Statement of changes
 
@@ -155,7 +155,7 @@ flowchart TD
 | double border | data store |
 | italic number | the manuscript section it feeds |
 
-Line style is the only distinguishing mark; no colour is used, so the diagram separates for a reader who cannot distinguish colours.
+Line style is the only distinguishing mark; no color is used, so the diagram separates for a reader who cannot distinguish colors.
 
 ### What each notebook reads and writes
 
@@ -243,19 +243,19 @@ The code was run under Python 3.11.15 in a conda environment named `simracing`. 
 
 ---
 
-## 7. Licence
+## 7. License
 
-The code in this repository is released under the MIT licence. The full text is in `LICENSE`.
+The code in this repository is released under the MIT license. The full text is in `LICENSE`.
 
-The code licence and the data licence are separate and do not stand in for one another.
+The code license and the data license are separate and do not stand in for one another.
 
-| Item | Licence |
+| Item | License |
 |---|---|
 | The code and notebooks in this repository | MIT |
 | The ACGym dataset | CC BY 4.0 |
 | The ACGym reference implementation | MIT |
 
-The ACGym data is distributed under the Creative Commons Attribution 4.0 International licence: <https://creativecommons.org/licenses/by/4.0/>. That licence asks work using the data to credit the creators, to link to the licence, and to state the changes made. The changes made in this work are described in section 2.
+The ACGym data is distributed under the Creative Commons Attribution 4.0 International license: <https://creativecommons.org/licenses/by/4.0/>. That license asks work using the data to credit the creators, to link to the license, and to state the changes made. The changes made in this work are described in section 2.
 
 ---
 
