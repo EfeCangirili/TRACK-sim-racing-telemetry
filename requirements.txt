@@ -1,0 +1,30 @@
+# TRACK pipeline dependencies
+#
+# Only packages actually imported by the nine pipeline notebooks are listed.
+# Versions are pinned to the conda environment named "simracing", which is the
+# environment the published numbers were produced in.
+#
+# That claim is measured rather than assumed. The environment's package records
+# show the last change at 2026-07-19 16:03, when statsmodels was updated to
+# 0.14.6 along with its dependency patsy; the four other packages touched that
+# day were certificates and interpreter ABI metadata, not numerical libraries.
+# Every canonical run that feeds the manuscript happened after that point:
+# the corner-type outputs on 2026-07-19 at 23:02, the cross-car outputs on
+# 2026-07-22 at 10:43 and 10:59, the tier and reference outputs later the same
+# day, and the robustness audit on 2026-07-23. The environment has not changed
+# since.
+#
+# Python 3.11.15
+#   conda create -n simracing python=3.11
+#   pip install -r requirements.txt
+
+matplotlib==3.10.8
+numpy==2.3.1
+pandas==3.0.1
+plotly==6.6.0
+SciencePlots==2.2.1
+scikit-learn==1.8.0
+scipy==1.16.0
+seaborn==0.13.2
+shap==0.51.0
+statsmodels==0.14.6

@@ -27,3 +27,6 @@ Desktop.ini
 .DS_Store
 .vscode/
 .idea/
+
+# Local data-root pointer, machine specific
+track_root.txt
