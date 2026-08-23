@@ -2,7 +2,7 @@
 
 Telemetry-Based Racing Analysis and Coaching Kit
 
-This repository holds the analytical system, the methods and the architecture through which driving and driver behavior are analyzed from sim racing telemetry. It is not offered as a software product; it holds how the accompanying manuscript was carried out and the method it used. The nine Python notebooks here were used to obtain the results and the steps the manuscript reports.
+This repository holds the analytical system, the methods and the architecture through which driving and driver behavior are analyzed from sim racing telemetry. It is not offered as a software product; it holds how the accompanying manuscript was carried out and the method it used. The eleven Python notebooks here were used to obtain the results and the steps the manuscript reports.
 
 The system works as follows. Corners on the circuits are first detected from the raw telemetry. Each corner pass is then divided into five phases, following how the human and the agent drivers approach the corner. Driving behavior is examined under four dimensions with nineteen metrics. Recording sessions are clustered on the scores obtained from those four dimensions, and the human metrics are finally expressed as ratios against the reference of the reinforcement-learning agents.
 
@@ -11,7 +11,7 @@ The system works as follows. Corners on the circuits are first detected from the
 ## 1. Repository layout
 
 ```
-notebooks/        nine Python notebooks, 01 through 09
+notebooks/        eleven Python notebooks, 01 through 11
 src/track/        path resolution
 docs/             mapping and reference documents
 data/derived/     the derived tables the manuscript reports
@@ -21,7 +21,7 @@ CITATION.cff      citation metadata
 LICENSE           license
 ```
 
-`notebooks/` is the pipeline itself. The notebooks are numbered in the order they run, and each one opens with an identity card giving what it reads, what it writes, which section of the manuscript it feeds, which working file it was copied from, and the checksum of that file. Section 4 describes what each notebook does.
+`notebooks/` is the pipeline itself. Notebooks 01 through 09 are numbered in the order they run. Notebooks 10 and 11 are a side branch that has to run before 08; section 4 shows where they join. Each notebook opens with an identity card giving what it reads, what it writes, which section of the manuscript it feeds, which working file it was copied from, and the checksum of that file. Section 4 describes what each notebook does.
 
 `src/track/` resolves the data root at run time. Paths are not written into the notebooks, so the repository runs on another machine after a single setting. Section 3 covers the setup.
 
@@ -49,7 +49,7 @@ This work does not redistribute the ACGym data as it stands. The data has been f
 
 ### Our own recordings
 
-A second and much smaller source is a set of sessions the first author recorded in Assetto Corsa Competizione through MoTeC. Those recordings are not part of ACGym and are archived separately.
+A second and much smaller source is a set of sessions the first author recorded in Assetto Corsa Competizione through MoTeC. Those recordings are not part of ACGym and are archived separately. Notebooks 10 and 11 carry them from the MoTeC export to the single record that 08 reads for the portability check, so the code path is here even though the recordings themselves are not.
 
 ### Without the data
 
@@ -109,11 +109,12 @@ If the root cannot be found the resolver does not carry on quietly; it stops and
 
 ## 4. The pipeline
 
-The nine notebooks run in the order below. A solid arrow is a computational dependency: the notebook it leaves writes a file the notebook it reaches then reads. A dotted arrow is not part of the computation; those are the inventory reads the notebooks perform in their closing cells, listing the outputs already produced and printing a summary.
+The eleven notebooks run in the order below. A solid arrow is a computational dependency: the notebook it leaves writes a file the notebook it reaches then reads. A dotted arrow is not part of the computation; those are the inventory reads the notebooks perform in their closing cells, listing the outputs already produced and printing a summary.
 
 ```mermaid
 flowchart TD
-    RAW[("raw telemetry<br/>ACGym and MoTeC")]
+    RAW[("raw telemetry<br/>ACGym")]
+    URAW[("recorded sessions<br/>MoTeC export")]
     N01["<b>01</b> pkl_to_parquet"]
     PROC[["data/processed"]]
     N02["<b>02</b> corner_segmentation<br/><i>3.2</i>"]
@@ -124,7 +125,10 @@ flowchart TD
     N06["<b>06</b> tier_ladder<br/><i>4.3</i>"]
     N07["<b>07</b> cross_car<br/><i>4.4</i>"]
     N08["<b>08</b> reference_gap<br/><i>4.5</i>"]
-    N09["<b>09</b> robustness<br/><i>4.3</i>"]
+    N09["<b>09</b> robustness<br/><i>4.2, 4.3</i>"]
+    N10["<b>10</b> user_import<br/><i>4.5</i>"]
+    N11["<b>11</b> user_portability<br/><i>4.5</i>"]
+    USTD[["data/raw/user_data"]]
     FP[["data/fingerprints"]]
     RES[["results"]]
 
@@ -140,6 +144,9 @@ flowchart TD
     PROC --> N08
     FP --> N09 --> RES
     RES --> N09
+
+    URAW --> N10 --> USTD --> N11
+    FEAT --> N11 --> FEAT
 
     N07 -.-> N08
     FP -.-> N06
@@ -169,7 +176,9 @@ Line style is the only distinguishing mark; no color is used, so the diagram sep
 | 06 | `tier_ladder` | `data/processed/<tier>/*_human.parquet` | `fingerprints/t<n>_<policy>/t<n>_info.json` | 4.3 |
 | 07 | `cross_car` | `data/features/`, `data/processed/tier3_large_3t3c/` | `results/cross_car_<policy>/nb16_info.json` | 4.4 |
 | 08 | `reference_gap` | `data/features/`, `data/processed/tier3_large_3t3c/` | `results/gap_analysis_<policy>/nb15_info.json` | 4.5 |
-| 09 | `robustness` | `data/fingerprints/`, `results/cross_car_<policy>/` | `results/robustness/` | 4.3 |
+| 09 | `robustness` | `data/fingerprints/`, `results/cross_car_<policy>/` | `results/robustness/` | 4.2, 4.3 |
+| 10 | `user_import` | `data/raw/motec_ld/*.csv` | `data/raw/user_data/standardized/` | 4.5 |
+| 11 | `user_portability` | `data/raw/user_data/standardized/`, `data/features/` | `data/features/driver_corner_matrix_monza_efe.parquet` | 4.5 |
 
 ### What each notebook produces
 
@@ -184,10 +193,12 @@ Line style is the only distinguishing mark; no color is used, so the diagram sep
 | 07 | Measures repeatability across cars and identity transfer between them |
 | 08 | Expresses the human metrics as ratios against the reinforcement-learning reference |
 | 09 | Recomputes the null distributions and compares them with the stored values |
+| 10 | Converts the MoTeC exports into one parquet file per lap, on the channel names the rest of the pipeline uses |
+| 11 | Runs the segmentation and the nineteen metrics over those laps, producing the single record 08 compares against the reference |
 
 ### Population definitions
 
-The study carries two definitions of the population. Notebooks 04 through 08 run once for each definition, that is, twice, writing their outputs to separate directories. Notebooks 01, 02 and 03 are independent of the definition and run once. Notebook 09 reads the outputs of both.
+The study carries two definitions of the population. Notebooks 04 through 08 run once for each definition, that is, twice, writing their outputs to separate directories. Notebooks 01, 02 and 03 are independent of the definition and run once, and so are 10 and 11, whose values are ratios to the reference and do not depend on which sessions are in the population. Notebook 09 reads the outputs of both definitions.
 
 Run times have not been measured.
 
