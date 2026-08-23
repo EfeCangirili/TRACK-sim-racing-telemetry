@@ -1,5 +1,5 @@
 # Raw and intermediate telemetry are NOT tracked here.
-# See data/README.md for how to obtain them.
+# Section 2 of README.md explains how to obtain them.
 data/raw/
 data/processed/
 data/reference_sac/

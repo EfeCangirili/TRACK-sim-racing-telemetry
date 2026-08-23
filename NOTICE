@@ -1,0 +1,11 @@
+NOTICE
+
+The MIT License in this repository covers the source code only.
+
+The Assetto Corsa Gym (ACGym) dataset analyzed by this code is distributed by
+its authors under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), and
+the ACGym reference implementation is distributed under the MIT License. Those
+terms are theirs, not ours, and they continue to apply to any use of that data.
+
+Section 2 of README.md gives the attribution and the statement of changes.
+Section 7 of README.md sets out which licence covers which part.
